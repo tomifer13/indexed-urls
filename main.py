@@ -14,11 +14,16 @@ def obtener_index(url):
     driver = webdriver.Chrome(options=options)
     driver.get(url)
     index = driver.find_element(By.XPATH, '//*[@id="result-stats"]').text
-    index = index.split('Cerca de ')[1].split(' resultados')[0]
-    driver.quit()
-    # Eliminar los puntos de los números
-    index = index.replace('.', '').replace(',','').replace(' ','')
-    return int(index)
+    try:
+        index = index.split('Cerca de ')[1].split(' resultados')[0]
+        # Eliminar los puntos de los números
+        index = index.replace('.', '').replace(',','').replace(' ','')
+        return int(index)
+    except IndexError:
+        print("Error: Unable to extract index information from the page.")
+        return None
+    finally:
+        driver.quit()
 
 
 def main():
