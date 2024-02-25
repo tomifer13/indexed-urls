@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 import matplotlib.pyplot as plt
 
 def obtener_index(url):
-    service = Service('/chromedriver.exe')  # Update this with the path to your Chromedriver executable
+    service = Service('chromedriver')  # Update this with the path to your Chromedriver executable
     service.start()
     driver = webdriver.Chrome(service=service)
     
