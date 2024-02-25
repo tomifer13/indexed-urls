@@ -9,15 +9,15 @@ from selenium.webdriver.support.wait import WebDriverWait
 import matplotlib.pyplot as plt
 
 def obtener_index(url):
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome(options=options)
+    service = Service('/chromedriver')  # Update this with the path to your Chromedriver executable
+    service.start()
+    driver = webdriver.Chrome(service=service)
+    
     driver.get(url)
     index = driver.find_element(By.XPATH, '//*[@id="result-stats"]').text
     try:
         index = index.split('Cerca de ')[1].split(' resultados')[0]
-        # Eliminar los puntos de los números
-        index = index.replace('.', '').replace(',','').replace(' ','')
+        index = index.replace('.', '').replace(',', '').replace(' ', '')
         return int(index)
     except IndexError:
         print("Error: Unable to extract index information from the page.")
