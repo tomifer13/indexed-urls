@@ -50,5 +50,7 @@ def main():
         ax.axis('equal')  # Asegura una forma circular
         st.pyplot(fig)
 
+        st.markdown("También puedes seguirme en [LinkedIn](https://www.linkedin.com/in/tomasezequiel)")
+
 if __name__ == "__main__":
     main()
