@@ -11,12 +11,29 @@ def obtener_index(url):
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
     driver.get(url)
-    index = driver.find_element(By.XPATH, '//*[@id="result-stats"]').text
-    index = index.split('Cerca de ')[1].split(' resultados')[0]
+    time.sleep(3)  # Espera unos segundos para asegurar que la página se cargue completamente
+
+    # Encuentra el elemento que contiene la cantidad de resultados indexados
+    index_element = driver.find_element(By.XPATH, '//*[@id="result-stats"]')
+    
+    # Obtén el texto que contiene el número de resultados
+    index_text = index_element.text
+    
+    # Extrae el número de resultados usando expresiones regulares
+    import re
+    match = re.search(r"Cerca de ([\d,]+) resultados", index_text)
+    if match:
+        index = match.group(1)
+    else:
+        index = None
+    
     driver.quit()
-    # Eliminar los puntos de los números
-    index = index.replace('.', '').replace(',','').replace(' ','')
-    return int(index)
+    
+    # Eliminar los caracteres no numéricos y convertir a entero
+    if index:
+        index = int(index.replace(',', ''))
+    
+    return index
 
 
 def main():
